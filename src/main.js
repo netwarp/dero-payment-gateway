@@ -16,6 +16,8 @@ class DeroPayment {
 		this.minutes = object.minutes
 
 		this.init()
+
+		toto()
 	}
 
 	init() {
@@ -29,6 +31,7 @@ class DeroPayment {
 		document.querySelector(this.selector).innerHTML = tpl
 
 		document.querySelector(this.selector).querySelector('.address').value = this.address
+		document.querySelector(this.selector).querySelector('.amount').innerText = this.amount + ' dero'
 	}
 
 	fillQRCode() {
@@ -100,13 +103,33 @@ class DeroPayment {
 
 			document.querySelector(this.selector).querySelector('.timer-bar').style.width = percent + '%'
 
-			const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
-			const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))
-			const seconds = Math.floor((distance % (1000 * 60)) / 1000)
+			let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+			let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))
+			let seconds = Math.floor((distance % (1000 * 60)) / 1000)
 
-			document.querySelector(this.selector).querySelector('.hours').innerText = hours
-			document.querySelector(this.selector).querySelector('.minutes').innerText = minutes
-			document.querySelector(this.selector).querySelector('.seconds').innerText = seconds
+			let time = ''
+
+			if (hours < 10) {
+				hours = `0${hours}`
+			}
+
+			time += hours
+			time += ':'
+
+			if (minutes < 10) {
+				minutes = `0${minutes}`
+			}
+
+			time += minutes
+			time += ':'
+
+			if (seconds < 10) {
+				seconds = `0${seconds}`
+			}
+
+			time += seconds
+
+			document.querySelector(this.selector).querySelector('.timer').innerText = time
 
 			if (distance < 0) {
 				clearInterval(x)
